@@ -1,4 +1,6 @@
 # Terraform Provide
+# https://registry.terraform.io/providers/hashicorp/aws/latest
+
 terraform {
   required_providers {
     aws = {
@@ -15,7 +17,7 @@ provider "aws" {
   secret_key = "xxxxxxx"
 }
 
-#Create new VPC
+# Create new VPC
 resource "aws_vpc" "myvpc" {
   cidr_block = "10.0.0.0/16"
   instance_tenancy = "default"
@@ -25,7 +27,7 @@ resource "aws_vpc" "myvpc" {
   }
 }
 
-# Add New Subnet
+#Add New Subnet
 resource "aws_subnet" "mysubnet" {
   vpc_id     = aws_vpc.myvpc.id
   cidr_block = "10.0.1.0/24"
@@ -36,7 +38,7 @@ resource "aws_subnet" "mysubnet" {
   }
 }
 
-#Add New Internet Gatewys for new VPC
+#Add New Internet Gateways
 resource "aws_internet_gateway" "mygw" {
   vpc_id = aws_vpc.myvpc.id
 
@@ -107,9 +109,9 @@ resource "aws_key_pair" "test" {
   public_key = file("${path.module}/id_rsa.pub")
 }
 
-#creating EC2 instance 
+#Creating EC2 instance 
 resource "aws_instance" "web" {
-  ami                         = "ami-01216e7612243e0ef"
+  ami                         = "xxxxxxxxxxxxxx"
   instance_type               = "t2.micro"
   key_name                    = aws_key_pair.test.key_name
   # key_name = existing key name  
@@ -117,7 +119,7 @@ resource "aws_instance" "web" {
   associate_public_ip_address = "true"
   vpc_security_group_ids = ["${aws_security_group.allow_tls.id}"]
   tags = {
-    Name = "aman"
+    Name = "demo"
   }
 
 }
