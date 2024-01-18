@@ -1,9 +1,10 @@
-#Security Group
+# Add New Security Group
 resource "aws_security_group" "allow_tls" {
   name        = "allow_tls"
   description = "Allow TLS inbound traffic"
   vpc_id      = aws_vpc.myvpc.id
-
+  
+  # Dynamic section for multiple ports
   dynamic "ingress" {
     for_each = [22, 80, 443]
     iterator = port
